@@ -1,0 +1,17 @@
+Standalone Installer via PowerShell (Recommended)
+
+# 1. Set the target install directory to Program Files
+$env:UV_INSTALL_DIR = "C:\Program Files\uv"
+
+# 2. Run the official installer
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+# 3. Add to the System (All Users) PATH environment variable
+$systemPath = [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine)
+if ($systemPath -notlike "*C:\Program Files\uv*") {
+    [Environment]::SetEnvironmentVariable(
+        "Path",
+        "$systemPath;C:\Program Files\uv",
+        [EnvironmentVariableTarget]::Machine
+    )
+}
